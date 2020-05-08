@@ -54,9 +54,11 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
         const dishItem = RenderDish(props.dish)
         const commentItem = RenderComments(props.dish.comments)
         return (
-            <div className="row">
-                {dishItem}
-                {commentItem}
+        	<div className="container">
+            	<div className="row">
+                	{dishItem}
+                	{commentItem}
+                </div>
             </div>
         );
     }
