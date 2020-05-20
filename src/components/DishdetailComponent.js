@@ -24,8 +24,9 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        alert(JSON.stringify(values));
     }
     render(){
         return (
@@ -70,9 +71,9 @@ class CommentForm extends Component {
                                 </Col>
                             </Row>    
                             <Row className="form-group">
-                                <Label htmlFor="commentMessage" md={12}>Comment</Label>
+                                <Label htmlFor="comment" md={12}>Comment</Label>
                                 <Col md={12}>
-                                <Control.textarea model=".message" id="message" name="message"
+                                    <Control.textarea model=".comment" id="comment" name="comment"
                                         rows="6"
                                         className="form-control" />
                                 </Col>
@@ -112,7 +113,7 @@ const RenderDish = (dish) => {
     }
 }
 
-const RenderComments = (comments) => {
+function RenderComments(comments, addComment, dishId) {
 	if(comments != null){
 		const commentsList = comments.map((cc) => {
        		return (
@@ -128,7 +129,7 @@ const RenderComments = (comments) => {
             	 <ul className='list-unstyled'>
                 	{commentsList}
            		 </ul>
-                 <CommentForm /> 
+                 <CommentForm dishId={dishId} addComment={addComment} />
             </div>
     	);
 	}
@@ -144,8 +145,8 @@ const Dishdetail = (props) => {
     if (props.dish == null) {
         return (<div></div>);
     }
-    const renderDish = RenderDish(props.dish)
-    const renderComments = RenderComments(props.comments)
+    const renderDish = RenderDish(props.dish);
+    const renderComments = RenderComments(props.comments, props.addComment, props.dish.id);
     return (
     	<div className="container">
             <div className="row">
