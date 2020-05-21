@@ -1,30 +1,60 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
+import { Fade, Stagger } from 'react-animation-components';
 
 
 const RenderLeader = (leader) => {
     return (
-        <Media>
+        <Fade in>
+            <Media key={leader.id}>
                 <Media left>
-                <Media object className="mr-5" src={leader.image} alt={leader.name} />
+                <Media object className="mr-5" src={baseUrl + leader.image} alt={leader.name}/>
                 </Media>
                 <Media body className="mb-5">
                     <Media heading><strong>{leader.name}</strong></Media>
                     <h6>{leader.designation}</h6>
                     {leader.description}
                 </Media>
-        </Media>
+            </Media>
+        </Fade>
     );
+}
+
+const RenderCoorporateList = (props) => {
+    if (props.leaders.isLoading) {
+        return(
+            <Loading />
+        );
+    }
+    else if (props.leaders.errMess) {
+        return(
+            <h4>{props.leaders.errMess}</h4>
+        );
+    }
+    else {
+        const leaders = props.leaders.leaders.map((leader) => {
+            return (
+                RenderLeader(leader)
+            );
+        });
+        return (
+            <div className="col-12">
+                <Media list>
+                    <Stagger in>
+                        {leaders}
+                    </Stagger>
+                </Media>
+            </div>
+        );
+    }
 }
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            RenderLeader(leader)
-        );
-    });
+    const renderCoorporateList = RenderCoorporateList(props);
 
     return(
         <div className="container">
@@ -80,11 +110,7 @@ function About(props) {
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                <div className="col-12">
-                    <Media list>
-                        {leaders}
-                    </Media>
-                </div>
+                {renderCoorporateList}
             </div>
         </div>
     );
