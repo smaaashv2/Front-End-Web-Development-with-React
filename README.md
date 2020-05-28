@@ -19,6 +19,6 @@ This course is taught by Professor Jogesh K Mupalla from The Hong Kong Universit
 ## I humbly request you to try to complete the assignments on your own first. 
 They are simple and are necessary in laying your foundation for React based Web Development.
 
-## This repository should be used only for reference and not a solution.
+## This repository should be used only for reference and not as a solution.
 
 # Please respect the [Coursera Honor Code](https://learner.coursera.help/hc/en-us/articles/209818863-Coursera-Honor-Code)
